@@ -9,14 +9,18 @@
 <body>
 
 <h1>Offline To-Do List</h1>
-<p>Status: <span id="status">Checking...</span></p>
+<div class="status-container">
+    <p>Status: <span id="status">Checking...</span></p>
+</div>
 
-<form id="todoForm">
-    <input type="text" id="task" placeholder="Enter task..." required>
-    <button type="submit">Add</button>
-</form>
+<div class="container">
+    <form id="todoForm">
+        <input type="text" id="task" placeholder="Enter task..." required>
+        <button type="submit">Add</button>
+    </form>
 
-<ul id="todoList"></ul>
+    <ul id="todoList"></ul>
+</div>
 
 <script src="app.js"></script>
 </body>
