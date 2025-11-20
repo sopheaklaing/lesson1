@@ -3,7 +3,8 @@ const FILES_TO_CACHE = [
     "./",
     "./index.html",
     "./style.css",
-    "./app.js"
+    "./app.js",
+    "./dashboard.html"   // ADD THIS
 ];
 
 // INSTALL SW
