@@ -1,8 +1,0 @@
-{
-  "name": "Offline CRUD App",
-  "short_name": "CRUD",
-  "start_url": "/index.html",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000"
-}

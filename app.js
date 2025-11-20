@@ -1,6 +1,4 @@
-// -----------------------------------
-// ONLINE / OFFLINE STATUS
-// -----------------------------------
+// ---------------- ONLINE / OFFLINE ----------------
 const statusEl = document.getElementById("status");
 
 function updateStatus() {
@@ -10,15 +8,12 @@ window.addEventListener("online", updateStatus);
 window.addEventListener("offline", updateStatus);
 updateStatus();
 
-// -----------------------------------
-// INDEXEDDB SETUP
-// -----------------------------------
+// ---------------- INDEXEDDB SETUP ----------------
 let db;
 const request = indexedDB.open("TodoDB", 1);
 
 request.onupgradeneeded = function (e) {
     db = e.target.result;
-
     if (!db.objectStoreNames.contains("todos")) {
         db.createObjectStore("todos", { keyPath: "id", autoIncrement: true });
     }
@@ -29,19 +24,17 @@ request.onsuccess = function (e) {
     displayTodos();
 };
 
-// -----------------------------------
-// ADD TASK
-// -----------------------------------
+// ---------------- ADD TASK ----------------
 const form = document.getElementById("todoForm");
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
 
-    const task = document.getElementById("task").value;
-    if (!task) return;
+    const name = document.getElementById("taskName").value;
+    const desc = document.getElementById("taskDesc").value;
 
     const tx = db.transaction(["todos"], "readwrite");
-    tx.objectStore("todos").add({ text: task, done: false });
+    tx.objectStore("todos").add({ name, description: desc });
 
     tx.oncomplete = () => {
         form.reset();
@@ -49,63 +42,36 @@ form.addEventListener("submit", function (e) {
     };
 });
 
-// -----------------------------------
-// DISPLAY TASKS
-// -----------------------------------
+// ---------------- DISPLAY TASKS ----------------
 function displayTodos() {
     const tx = db.transaction(["todos"], "readonly");
-    const store = tx.objectStore("todos");
-    const req = store.getAll();
+    const req = tx.objectStore("todos").getAll();
 
-    req.onsuccess = function () {
+    req.onsuccess = () => {
         const list = document.getElementById("todoList");
         list.innerHTML = "";
 
         req.result.forEach(todo => {
             const li = document.createElement("li");
-
             li.innerHTML = `
-                <span class="${todo.done ? "completed" : ""}">${todo.text}</span>
+                <strong>${todo.name}</strong><br>
+                ${todo.description}
                 <div>
-                    <button onclick="toggleDone(${todo.id}, ${todo.done})">✓</button>
                     <button onclick="deleteTodo(${todo.id})">🗑</button>
-                </div>
-            `;
-
+                </div>`;
             list.appendChild(li);
         });
     };
 }
 
-// -----------------------------------
-// MARK DONE / UNDONE
-// -----------------------------------
-function toggleDone(id, done) {
-    const tx = db.transaction(["todos"], "readwrite");
-    const store = tx.objectStore("todos");
-
-    store.get(id).onsuccess = function (e) {
-        const data = e.target.result;
-        data.done = !done;
-        store.put(data);
-    };
-
-    tx.oncomplete = displayTodos;
-}
-
-// -----------------------------------
-// DELETE TASK
-// -----------------------------------
+// ---------------- DELETE ----------------
 function deleteTodo(id) {
     const tx = db.transaction(["todos"], "readwrite");
     tx.objectStore("todos").delete(id);
     tx.oncomplete = displayTodos;
 }
 
-// -----------------------------------
-// REGISTER SERVICE WORKER
-// -----------------------------------
+// ---------------- REGISTER SW ----------------
 if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("sw.js")   // IMPORTANT for GitHub Pages
-        .then(() => console.log("Service Worker Registered"));
+    navigator.serviceWorker.register("sw.js");
 }
