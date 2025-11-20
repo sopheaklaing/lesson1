@@ -1,26 +1,41 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    max-width: 600px;
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
 }
 
-input, button {
-    padding: 8px;
-    margin: 5px 0;
+h1 {
+    text-align: center;
+}
+
+form {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
 }
 
 button {
+    padding: 10px 20px;
     cursor: pointer;
-}
-
-ul {
-    list-style: none;
-    padding-left: 0;
 }
 
 li {
     background: #f2f2f2;
-    margin: 5px 0;
-    padding: 8px;
-    border-radius: 4px;
+    margin-top: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 5px;
+}
+
+.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
 }

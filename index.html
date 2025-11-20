@@ -3,21 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline Web App Demo</title>
+    <title>Offline To-Do App</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Offline Web Application Demo</h1>
-    <p>Status: <span id="status">Checking...</span></p>
 
-    <form id="dataForm">
-        <input type="text" id="name" placeholder="Enter name" required>
-        <button type="submit">Add Data</button>
-    </form>
+<h1>Offline To-Do List</h1>
+<p>Status: <span id="status">Checking...</span></p>
 
-    <h2>Stored Data:</h2>
-    <ul id="dataList"></ul>
+<form id="todoForm">
+    <input type="text" id="task" placeholder="Enter task..." required>
+    <button type="submit">Add</button>
+</form>
 
-    <script src="app.js"></script>
+<ul id="todoList"></ul>
+
+<script src="app.js"></script>
 </body>
 </html>
